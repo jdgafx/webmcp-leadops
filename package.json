@@ -1,0 +1,11 @@
+{
+  "name": "webmcp-leadops",
+  "version": "1.0.0",
+  "description": "Agent-ready lead console demonstrating the W3C WebMCP API (document.modelContext) — five structured tools, declarative + imperative, zero dependencies.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/agent-roundtrip.test.mjs"
+  },
+  "license": "MIT"
+}

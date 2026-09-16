@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeadOps — WebMCP Agent Console</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="logo">◈</span>
+      <div>
+        <h1>LeadOps</h1>
+        <p class="subtitle">Agent-ready lead console · WebMCP (W3C) · zero dependencies</p>
+      </div>
+    </div>
+    <div id="webmcp-status" class="status status--checking">Checking WebMCP support…</div>
+  </header>
+
+  <main class="grid">
+    <!-- ══ DECLARATIVE TOOL: visible, human-in-the-loop ══ -->
+    <section class="card">
+      <h2>Add Lead <span class="badge">declarative · visible</span></h2>
+      <p class="hint">The agent pre-fills; the human confirms by clicking Add.</p>
+      <form id="add-lead-form" toolname="add-lead"
+        tooldescription="Add a new lead to the pipeline. Provide company, contact name, and an optional source.">
+        <input type="text" name="company" placeholder="Company — e.g. Acme Robotics" required autocomplete="off" />
+        <input type="text" name="contact" placeholder="Contact name — e.g. Dana Reyes" autocomplete="off" />
+        <input type="text" name="source" placeholder="Source — e.g. referral / inbound / outbound" autocomplete="off" />
+        <button type="submit">Add lead</button>
+      </form>
+    </section>
+
+    <!-- ══ DECLARATIVE TOOLS: hidden, auto-submit ══ -->
+    <form id="list-leads-form" toolname="list-leads"
+      tooldescription="List leads in the pipeline. Returns id, company, contact, status, notes, and added date. Optional filter by status (new | contacted | won | lost)."
+      toolautosubmit hidden>
+      <input type="text" name="status" />
+    </form>
+
+    <form id="update-lead-form" toolname="update-lead-status"
+      tooldescription="Move a lead to a new pipeline status: new, contacted, won, or lost. Requires the lead id."
+      toolautosubmit hidden>
+      <input type="number" name="id" />
+      <input type="text" name="status" />
+    </form>
+
+    <form id="add-note-form" toolname="add-note"
+      tooldescription="Append a note to a lead's activity log. Requires the lead id and note text."
+      toolautosubmit hidden>
+      <input type="number" name="id" />
+      <input type="text" name="note" />
+    </form>
+
+    <form id="stats-form" toolname="lead-stats"
+      tooldescription="Pipeline summary: counts per status and conversion rate. Call before deciding follow-ups."
+      toolautosubmit hidden>
+    </form>
+
+    <section class="card">
+      <h2>Pipeline <span id="lead-count" class="count">0</span></h2>
+      <ul id="lead-list" class="lead-list"></ul>
+      <p id="empty-message" class="empty">No leads yet — add one above, or let an agent do it.</p>
+    </section>
+
+    <section class="card">
+      <h2>Agent Tool Registry</h2>
+      <ul id="tool-registry" class="tool-registry"></ul>
+    </section>
+
+    <section class="card">
+      <h2>WebMCP Event Log</h2>
+      <div id="event-log" class="event-log">
+        <p class="log-placeholder">Tool registrations and agent invocations appear here…</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <strong>LeadOps</strong> exposes five structured tools to any WebMCP-capable agent.
+      Humans and agents share the same state, the same UI, and the same log.
+      <a href="https://webmachinelearning.github.io/webmcp/" target="_blank" rel="noopener">W3C proposal</a>
+      · flag: <code>chrome://flags/#enable-webmcp-testing</code> (Chrome 146+)
+    </p>
+  </footer>
+
+  <script type="module" src="webmcp.js"></script>
+</body>
+</html>
